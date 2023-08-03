@@ -54,8 +54,8 @@ public class EnvironmentInformation {
      *
      * @return The project version string.
      */
-    public static String getVersion() {
-        return getVersionsInstance().projectVersion;
+    public static String getVersion() { // 版本号对应的方法
+        return getVersionsInstance().projectVersion; 
     }
 
     /**
@@ -86,7 +86,7 @@ public class EnvironmentInformation {
     }
 
     /** @return The last known abbreviated commit id of this version of the software. */
-    public static String getGitCommitIdAbbrev() {
+    public static String getGitCommitIdAbbrev() { // 获取 commitId
         return getVersionsInstance().gitCommitIdAbbrev;
     }
 
@@ -109,8 +109,8 @@ public class EnvironmentInformation {
      *
      * @return The code revision.
      */
-    public static RevisionInformation getRevisionInformation() {
-        return new RevisionInformation(getGitCommitIdAbbrev(), getGitCommitTimeString());
+    public static RevisionInformation getRevisionInformation() { // commitId 的来源
+        return new RevisionInformation(getGitCommitIdAbbrev(), getGitCommitTimeString()); // 构造方法直接赋值了，两个入参分别是 commitId 和 commitDate
     }
 
     private static final class Versions {
@@ -125,7 +125,7 @@ public class EnvironmentInformation {
         private Instant gitCommitTime = DEFAULT_TIME_INSTANT;
         private String gitCommitTimeStr = DEFAULT_TIME_STRING;
 
-        private static final String PROP_FILE = ".flink-runtime.version.properties";
+        private static final String PROP_FILE = ".flink-runtime.version.properties"; // 这就是配置文件真身
 
         private static final String FAIL_MESSAGE =
                 "The file "
@@ -145,7 +145,7 @@ public class EnvironmentInformation {
             try (InputStream propFile = classLoader.getResourceAsStream(PROP_FILE)) {
                 if (propFile != null) {
                     Properties properties = new Properties();
-                    properties.load(propFile);
+                    properties.load(propFile); // 这些参数都从这个文件里面来
 
                     projectVersion = getProperty(properties, "project.version", UNKNOWN);
                     scalaVersion = getProperty(properties, "scala.binary.version", UNKNOWN);
